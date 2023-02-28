@@ -1,0 +1,14 @@
+# folders
+artifacts/
+build/
+cache/
+coverage/
+dist/
+lib/
+node_modules/
+typechain/
+.openzeppelin/
+.deployments/
+
+# files
+coverage.json

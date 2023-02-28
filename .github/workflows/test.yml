@@ -1,0 +1,43 @@
+name: build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup Repo
+        uses: actions/checkout@v2
+
+      - name: Uses node.js 16
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.14.0
+
+      - name: Install
+        run: yarn install --frozen-lockfile
+
+      # - name: Lint
+      # run: yarn lint
+
+      - name: Compile
+        run: yarn compile
+
+      - name: Generate Typechain
+        run: yarn typechain
+
+      - name: Test
+        env:
+          ALCHEMY_API_KEY: ${{ secrets.ALCHEMY_API_KEY }}
+        run: yarn test
+
+      # - name: Coverage
+      #   env:
+      #     ALCHEMY_API_KEY: ${{ secrets.ALCHEMY_API_KEY }}
+      #   run: yarn coverage
